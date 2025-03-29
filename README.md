@@ -20,7 +20,9 @@ A simple terminal-based chat application built with **Python sockets** and **thr
 
 Cli-Chat/
 ├── server.py       # Multi-client TCP server
+
 ├── client.py       # Interactive client with sending/receiving
+
 ├── README.md       # Project documentation
 
 ---
