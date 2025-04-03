@@ -1,69 +1,37 @@
 import socket
 import threading
 
-
-HEADER = 64
-
-PORT = 5050
-FORMAT = 'utf-8'
-DISCONNECT_MESSAGE = "!DISCONNECT"
-
-SERVER = "127.0.0.1"
-
-ADDR = (SERVER, PORT)
+from functions.client_func import receive, send
+from config import ADDR, DISCONNECT_MESSAGE,HEADER,FORMAT
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect(ADDR)
 
-username = input("Enter Your Username")
 
+username = input("Enter Your Username -")
 
-def receive():
-    while True:
-        try:
-            msg = client.recv(2048).decode(FORMAT)
-            if msg.startswith(f"[{username}]"):
-                print(f"\r🟢 {msg}\n> ", end="")
-            else:
-                print(f"\r{msg}\n> ", end="")
-        except:
-            print("ERROR Connection closed or lost.")
-            break
+username_encoded = username.encode(FORMAT)
+username_length = str(len(username_encoded)).encode(FORMAT)
+username_length += b' ' * (HEADER - len(username_length))
+client.send(username_length)
+client.send(username_encoded)
 
-
-receive_thread = threading.Thread(target=receive)
+receive_thread = threading.Thread(target=receive, args=(client, username))
 receive_thread.start()
 
-
-def send(msg):
-    msg = msg.strip()
-
-    if msg.startswith("/"):
-        message = msg.encode(FORMAT)
-    else:
-        message = msg.encode(FORMAT)
-
-    msg_length = len(message)
-    send_length = str(msg_length).encode(FORMAT)
-    send_length += b' ' * (HEADER - len(send_length))
-
-    client.send(send_length)
-    client.send(message)
-
-
 while True:
-    msg = input("> ")
+    msg = input(f"[{username}] -> ").lstrip()
 
     if msg == "/help":
         print("Dostępne komendy:\n/help\n/list\n!DISCONNECT")
         continue
 
     if msg == "/list":
-        send("/list")
+        send("/list", client)
         continue
 
     if msg == DISCONNECT_MESSAGE:
-        send(msg)
+        send(msg, client)
         break
 
-    send(msg)
+    send(msg, client)

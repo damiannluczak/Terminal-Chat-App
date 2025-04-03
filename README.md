@@ -10,7 +10,6 @@ A simple terminal-based chat application built with **Python sockets** and **thr
 - Real-time messaging over TCP
 - Username handling and message formatting
 - Server-side message broadcasting
-- Graceful disconnect handling (`!DISCONNECT`)
 - Terminal-only interface (CLI)
 - Clean, modular architecture
 
@@ -20,11 +19,13 @@ A simple terminal-based chat application built with **Python sockets** and **thr
 
 Cli-Chat/
 
-├── server.py       # Multi-client TCP server
-
-├── client.py       # Interactive client with sending/receiving
-
-├── README.md       # Project documentation
+├── client.py                 # Client entry point (connects, sends, receives)          
+├── server.py                 # Server entry point (accepts clients, manages threads)      
+├── config.py                 # Shared constants (IP, port, format, header)
+├── README.md                 # documentation        
+├── functions/      
+│  ├── client_func.py        # Client logic (send, receive functions)
+│  └── server_func.py        # Server logic (handle_client function)
 
 ---
 
@@ -46,7 +47,12 @@ Cli-Chat/
 ### Commit #3 – "Basic Commands"
 - Added /help -   prints available commands
 - Added /list -  displays list of online users
-- Prevented commands from being broadcasted as messages
+
+### Commit #4 – "Bug fix, code clean up"
+- Extracted functions to seperate files 
+- Added safe re-run
+- Repaired display and input UX
+- Code cleanup 
 
 ## TODO – Upcoming Features
 
@@ -59,9 +65,4 @@ Cli-Chat/
 
 
 
-##  How to Run
-
-### Start the Server
-```bash
-python server.py
 
