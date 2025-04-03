@@ -43,9 +43,14 @@ Cli-Chat/
 - Added graceful disconnect with `!DISCONNECT`
 - Cleaned up and improved logging
 
+### Commit #3 – "Basic Commands"
+- Added /help -   prints available commands
+- Added /list -  displays list of online users
+- Prevented commands from being broadcasted as messages
+
 ## TODO – Upcoming Features
 
-- [ ] Implement commands: `/help`, `/list`, `/quit`
+- [ ] Implement commands: `/quit`
 - [ ] Add channels/groups: individual chat rooms or topics
 - [ ] Build structured CLI UI with navigation levels
   - login → choose channel → enter chat
