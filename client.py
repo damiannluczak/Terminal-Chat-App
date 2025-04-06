@@ -2,6 +2,7 @@ import socket
 import threading
 import sys
 from config import ADDR, FORMAT, DISCONNECT_MESSAGE
+from functions import command
 from functions.client_func import receive, send
 
 def main():
@@ -31,6 +32,15 @@ def main():
         if msg == "/quit":
             send(DISCONNECT_MESSAGE, client_socket, username)
             break
+        if msg.startswith("/"):
+            if msg in command.COMMANDS:
+                command.COMMANDS[msg](client_socket, username)
+            else:
+                print("[system]: Komenda nie rozpoznana")
+
+
+
+
         else:
             send(msg, client_socket, username)
 

@@ -29,40 +29,44 @@ Cli-Chat/
 
 ---
 
-## Commits History
+
+## 📜 Commits History
 
 ### Commit #1 – "Initial Working Connection"
 - Created `server.py` and `client.py`
-- Established TCP connection with `socket`
-- Sent messages from client to server
+- Established basic TCP connection
+- Enabled single-message sending from client to server
 
 ### Commit #2 – "Broadcasting and Receive Thread"
-- Added `username` handling on client side
-- Implemented **multi-client support** using `threading` in server
-- Created server-side **message broadcasting** to all clients
-- Implemented **receive thread** on client side to handle incoming messages live
-- Added graceful disconnect with `!DISCONNECT`
-- Cleaned up and improved logging
+- Implemented **multi-client support** using `threading`
+- Added `username` input and tagging messages with it
+- Server now broadcasts incoming messages to all clients
+- Added live **receive thread** on client side
+- Introduced `!DISCONNECT` command
 
 ### Commit #3 – "Basic Commands"
-- Added /help -   prints available commands
-- Added /list -  displays list of online users
+- Added `/help` – prints available commands
+- Added `/list` – shows online users on request
 
-### Commit #4 – "Bug fix, code clean up"
-- Extracted functions to seperate files 
-- Added safe re-run
-- Repaired display and input UX
-- Code cleanup 
+### Commit #4 – "Bug Fixes and Cleanup"
+- Extracted reusable logic into `functions/`
+- Improved terminal formatting and UX
+- Made code restart-safe and modular
 
-## TODO – Upcoming Features
+###  Commit #5 – "Switch to JSON Msg Format + Timestamp"
+- Migrated message format to **JSON**
+  - Includes `time`, `sender`, and `text` fields
+- Messages are now parsed and formatted consistently
+- Timestamp is added on the server (for sync)
+- Removed local echo of user input (to avoid duplicates)
+- Added terminal cursor tricks to clear user input after `Enter`
 
-- [ ] Implement commands: `/quit`
-- [ ] Add channels/groups: individual chat rooms or topics
-- [ ] Build structured CLI UI with navigation levels
-  - login → choose channel → enter chat
-- [ ] Save message logs to a file on the server
-- [ ] Add SSL/TLS encryption for secure communication
+---
 
+## 🔜 TODO – Upcoming Features
 
-
-
+- [ ] Add channels/groups (chat rooms)
+- [ ] Build CLI UI navigation (login → channel → chat)
+- [ ] Save message history to file on the server
+- [ ] Add TLS/SSL encryption for secure messages
+- [ ] Create emoji support or text reactions 😄
