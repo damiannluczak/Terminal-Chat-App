@@ -1,37 +1,40 @@
 import socket
 import threading
-
+import sys
+from config import ADDR, FORMAT, DISCONNECT_MESSAGE
 from functions.client_func import receive, send
-from config import ADDR, DISCONNECT_MESSAGE,HEADER,FORMAT
 
-client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-client.connect(ADDR)
+def main():
+    client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    client_socket.connect(ADDR)
 
+    username = input("Enter Your Username - ")
 
-username = input("Enter Your Username -")
+    user_enc = username.encode(FORMAT)
+    user_len = str(len(user_enc)).encode(FORMAT)
+    user_len += b' ' * (64 - len(user_len))
+    client_socket.send(user_len)
+    client_socket.send(user_enc)
 
-username_encoded = username.encode(FORMAT)
-username_length = str(len(username_encoded)).encode(FORMAT)
-username_length += b' ' * (HEADER - len(username_length))
-client.send(username_length)
-client.send(username_encoded)
+    recv_thread = threading.Thread(target=receive, args=(client_socket,))
+    recv_thread.start()
 
-receive_thread = threading.Thread(target=receive, args=(client, username))
-receive_thread.start()
+    while True:
+        msg = input()
 
-while True:
-    msg = input(f"[{username}] -> ").lstrip()
+        # Usuwamy wpisaną linię z terminala (hack ANSI),
+        # dzięki czemu nie pojawia się „podwójny” wpis.
+        sys.stdout.write("\033[F\033[K")
+        sys.stdout.flush()
 
-    if msg == "/help":
-        print("Dostępne komendy:\n/help\n/list\n!DISCONNECT")
-        continue
+        # Sprawdzamy, czy to komenda rozłączenia
+        if msg == "/quit":
+            send(DISCONNECT_MESSAGE, client_socket, username)
+            break
+        else:
+            send(msg, client_socket, username)
 
-    if msg == "/list":
-        send("/list", client)
-        continue
+    client_socket.close()
 
-    if msg == DISCONNECT_MESSAGE:
-        send(msg, client)
-        break
-
-    send(msg, client)
+if __name__ == "__main__":
+    main()
