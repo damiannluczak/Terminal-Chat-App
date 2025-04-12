@@ -1,10 +1,10 @@
-# 💬 Terminal Chat App (Python TCP)
+# Terminal Chat App (Python TCP)
 
 A simple terminal-based chat application built with **Python sockets** and **threading**, allowing multiple users to chat in real-time. Designed to learn and showcase skills in network programming, concurrency, and client-server architecture.
 
 ---
 
-## 🚀 Features
+## Features
 
 - Multi-client support using `threading`
 - Real-time messaging over TCP
@@ -30,7 +30,7 @@ Cli-Chat/
 ---
 
 
-## 📜 Commits History
+## Commits History
 
 ### Commit #1 – "Initial Working Connection"
 - Created `server.py` and `client.py`
@@ -63,7 +63,7 @@ Cli-Chat/
 
 ---
 
-## 🔜 TODO – Upcoming Features
+## TODO – Upcoming Features
 
 - [ ] Add channels/groups (chat rooms)
 - [ ] Build CLI UI navigation (login → channel → chat)
