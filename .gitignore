@@ -61,3 +61,6 @@ coverage.xml
 *.swp
 *.bak
 *.tmp
+/base/
+2.client.py
+2.server.py
